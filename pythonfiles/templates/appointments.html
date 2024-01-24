@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+Appointments Page
+
+{% endblock %}
+
+
+
+{% block content %}
+<style>
+    .appcontainer {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        /* margin-top: 80px; */
+
+    }
+
+    section {
+        background-color: #fff;
+        opacity: 0.7;
+        border-radius: 5px;
+        box-shadow: 0 0 10px #3468C0;
+        margin: 20px;
+        padding: 20px;
+        flex: 1 1 90%;
+        /* Full width for larger screens */
+        max-width: 65%;
+        /* Limit maximum width */
+        margin-top: 20px;
+    }
+
+
+    .h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: black;
+    }
+
+    /* Form and search styles */
+    .input-group {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .input-group input,
+    .input-group textarea {
+        flex: 1;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: rgb(30, 53, 230);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+        margin-left: 5%;
+    }
+
+    .date-search,
+    .patient-search {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    #dateInput,
+    #patientInput {
+        flex: 1;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+
+    /* styles.css */
+    .flash-messages {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        height: 50px;
+        /* background-color: #4CAF50; */
+        color: #7E1717;
+        font-size: 18px;
+    }
+
+    .flash-message {
+        padding: 10px;
+        border-radius: 5px;
+        animation: slideInAndOut 4s ease-in-out;
+    }
+    .below{
+        display: flex;
+        width: 900px;
+        justify-content: space-between;
+
+    }
+
+
+    .flash-messages.scheduled {
+  /* Add styles for flash messages when appointment is scheduled */
+  background-color: #90EE90;
+  border-color: #c3e6cb;
+  animation: slideIn 1s ease-out;
+}
+
+.flash-messages.scheduled .message {
+  /* Add styles for individual messages when appointment is scheduled */
+  color: #155724;
+}
+
+.flash-messages.scheduled .alert-danger {
+  /* Override styles for danger messages when appointment is scheduled */
+  background-color: #eede90;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+
+
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+        section {
+            flex-basis: calc(50% - 40px);
+            /* Half width for larger screens */
+            max-width: calc(50% - 40px);
+            /* Limit maximum width */
+        }
+    }
+</style>
+
+<div class="flash-messages {% if appointment_scheduled %}scheduled{% endif %}">
+    {% with messages = get_flashed_messages() %}
+      {% if request.endpoint == 'set_appointments' %}
+        {% for message, message_type in messages %}
+          <div class="alert alert-{{ message_type }} message">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+
+<div class="hero-section appointments-bg">
+
+
+    <main>
+        <section class="set-appointment">
+            <div class="appcontainer">
+                <h1 class="h1">Book Appointment</h1>
+                <form id="appointmentForm" action="{{url_for('set_appointments')}}" method="POST">
+                    <div class="input-group">
+                        <input type="text" name="patientName" placeholder="Patient Name" required>
+                        <input type="number" name="number" placeholder="Patient Number" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" name="fees" placeholder="Fess" required>
+                        <input type="text" name="doctor_name" placeholder="Doctor Name" value="{{ doctor_name }}" required>
+                    </div>
+                    <input type="date" name="appointmentDate" required>
+                    <button id="setAppointmentBtn" type="submit">Set Appointment</button>
+                </form>
+            </div>
+        </section>
+
+        <div class="below">
+            <section class="appointments-by-date">
+                <form id="appointmentForm" action="/appointments_by_date" method="post">
+                    <div class="appcontainer">
+                        <h1 class="h1">Appointments by Date</h1>
+                        <div class="date-search">
+                            <div class="input-group">
+                                <input type="date" name="dateInput" required>
+                            </div>
+                        </div>
+                        <button type="submit">Submit</button>
+                        <ul id="appointmentsByDate"></ul>
+                    </div>
+                </form>
+            </section>
+
+            <section class="appointments-by-patient">
+                <form id="appointmentForm" action="/appointments_by_patient" method="post">
+                    <div class="appcontainer patient">
+                        <h1 class="h1">Patient Appointments</h1>
+                        <div class="patient-search">
+                            <input type="text" name="patient_name" id="patientInput" placeholder="Search patient name">
+                        </div>
+                        <button id="patientSearchBtn">Search</button>
+                        <ul id="appointmentsByPatient"></ul>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+</div>
+
+<script>
+    // Hide flash messages after 5 seconds (adjust the duration as needed)
+    $(document).ready(function() {
+      setTimeout(function() {
+        $(".flash-messages").fadeOut("slow");
+      }, 2500); // 1500 milliseconds (1.5 seconds)
+    });
+  </script>
+
+{% endblock %}
+
+

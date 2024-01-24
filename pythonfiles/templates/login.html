@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #00A9FF;
+        }
+
+        .hero-section {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .h1 {
+            background-color: #00A9FF;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .card {
+            width: 300px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: black;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            background-color: #00A9FF;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .messages {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            color: #ff0000;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 10px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav a:hover {
+            background-color: #fff;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero-section">
+        <div class="login-container">
+            <h1 class="h1">WeCare's Hospital Login Portal</h1>
+
+            <div class="cards">
+                <a href="#" class="card user">
+                    <div class="card-header">
+                        <h2>User</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Login as a user to access personalized portal and manage health records.</p>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('login_doctor') }}" class="card doctor">
+                    <div class="card-header" style="background-color: #28a745;">
+                        <h2>Doctor</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Login as a doctor to access patient records, manage appointments, and provide healthcare.</p>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('login_staff') }}" class="card staff">
+                    <div class="card-header" style="background-color: #6610f2;">
+                        <h2>Staff</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Login as a staff member to streamline hospital operations and assist patients effectively.
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

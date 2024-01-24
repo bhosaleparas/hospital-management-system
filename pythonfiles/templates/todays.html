@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<style>
+    /* static/styles.css */
+
+    .table-container {
+    max-height: 400px;  /* Set the maximum height for the table container */
+    overflow-y: auto;   /* Add vertical scrolling for overflow content */
+}
+
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;  /* Adjust the top margin for better spacing */
+    color: white;
+}
+
+.appointments-table th, .appointments-table td {
+    border: 1px solid #212122;
+    color: black;
+    padding: 8px;
+    text-align: left;
+    background-color: #B4D4FF;
+}
+
+.appointments-table th {
+    background-color: #AA77FF;
+}
+
+.heading{
+    width: 100%;
+    /* background-color: #6499E9; */
+}
+</style>
+<!-- appointments_by_date.html -->
+<div class="hero-section appointments-bg">
+    <div class="appointments-by-date">
+        <div class="heading">
+        <h2 style="color: #212121;">Appointments for {{ date_input }}</h2>
+    </div>
+
+        {% if date_input %}
+        <div class="table-container">
+            <table class="appointments-table">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Doctor Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments_by_date %}
+                    <tr>
+                        <td>{{ appointment.patient_name }}</td>
+                        <td>{{ appointment.doctor.name }}</td>
+                        <td>{{ appointment.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>No appointments found for the selected date.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

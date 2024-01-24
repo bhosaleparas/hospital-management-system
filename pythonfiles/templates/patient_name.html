@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Patient Name
+{% endblock %}
+
+{% block content %}
+    <style>
+        .appcontainer {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .card {
+            width: 300px;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            background-color: #3498db;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            color: #fff;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        p {
+            color: #fff;
+            margin: 0;
+        }
+
+        .hero-section {
+        padding: 40px 0;
+        text-align: center;
+        color: #fff;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    /* .contact-bg {
+        background-image: url('path/to/your/image.jpg');
+        background-size: cover;
+        background-position: center;
+    } */
+
+    .appcontainer {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .no-appointments-message {
+        text-align: center;
+        font-size: 1.2em;
+        color: #333;
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            width: calc(50% - 20px);
+        }
+    }
+    </style>
+
+    <div class="hero-section contact-bg">
+        <section class="appointments-by-patient">
+            <div class="appcontainer">
+                {% if appointments_by_patient %}
+                    {% for appointment in appointments_by_patient %}
+                        <div class="card">
+                            <h2>{{ appointment.patient_name }}</h2>
+                            <p><strong>Appointment Date:</strong> {{ appointment.appointment_date }}</p>
+                            <p><strong>Doctor Name:</strong> {{ appointment.doctor.name }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No appointments found for the specified patient.</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+{% endblock %}

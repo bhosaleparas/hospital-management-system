@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    /* Add your global styles here */
+
+    /* Styles for header */
+    .h1 {
+        /* background-color: #5e60ce; */
+        color: black;
+        padding: 20px 0;
+        text-align: center;
+        font-size: 2em;
+    }
+
+    h2 {
+        color: black;
+    }
+
+    /* Styles for the main dashboard container */
+    .dashboard {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px;
+    }
+
+    /* Styles for each card */
+    .card {
+        background-color: #C7EEFF;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        margin: 10px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    /* Styles for form elements */
+    input,
+    button {
+        padding: 12px;
+        margin: 10px 0;
+        width: 100%;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+
+    button {
+        background-color: #FF5656;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    button:hover {
+        background-color: #4C0027;
+    }
+
+    /* Styles for table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid #dee2e6;
+    }
+
+    th,
+    td {
+        padding: 15px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #5e60ce;
+        color: #fff;
+    }
+
+    /* Styles for responsive design */
+    @media screen and (max-width: 768px) {
+        .card {
+            width: 100%;
+        }
+
+        /* Add more media query styles as needed */
+    }
+</style>
+<div class="hero-section contact-bg ">
+    <!-- <header>
+        <h1 class="h1">Welcome, {{ doctor_name }}!</h1>
+    </header> -->
+
+    <div class="dashboard">
+        <h3>wellcome {{ name }}</h3>
+        <div class="card">
+            <form method="post" action="{{ url_for('dashboard') }}">
+                <h2>Show Today's Appointments</h2>
+                <button type="submit">Show</button>
+            </form>
+        </div>
+
+        {% if todays_appointments %}
+        <div class="card">
+            <h2>Today's Appointments</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Appointment Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in todays_appointments %}
+                    <tr>
+                        <td>{{ appointment.patient_name }}</td>
+                        <td>{{ appointment.appointment_time.strftime('%H:%M') }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('update_appointment_status') }}">
+                                <input type="hidden" name="appointment_id" value="{{ appointment.appointment_id }}">
+                                <select name="status">
+                                    <option value="Scheduled" {% if appointment.status=='Scheduled' %}selected{% endif
+                                        %}>Scheduled</option>
+                                    <option value="Cancelled" {% if appointment.status=='Cancelled' %}selected{% endif
+                                        %}>Cancelled</option>
+                                    <option value="Completed" {% if appointment.status=='Completed' %}selected{% endif
+                                        %}>Completed</option>
+                                </select>
+                                <button type="submit">Update Status</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        {% if patient_info %}
+        <div>
+            <h2>Patient Information</h2>
+            <p>Name: {{ patient_info.patient_name }}</p>
+            <p>Contact Number: {{ patient_info.contact_number }}</p>
+            <!-- Add more fields as needed -->
+
+            <h3>Relatives</h3>
+            <ul>
+                {% for relative in relatives_info %}
+                <li>{{ relative.relative_name }}</li>
+                {% endfor %}
+            </ul>
+
+            {% if appointment_info %}
+            <h3>Appointment Information</h3>
+            <p>Date: {{ appointment_info.appointment_date }}</p>
+            <p>Time: {{ appointment_info.appointment_time.strftime('%H:%M') }}</p>
+            <p>Status: {{ appointment_info.status }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

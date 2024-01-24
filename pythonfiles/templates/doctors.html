@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Doctors
+{% endblock %}
+
+{% block content %}
+<style>
+    .table-container {
+        max-height: 400px; /* Set the maximum height based on your design */
+        overflow-y: auto;
+        width: 75%;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%; /* Use 100% width for the table */
+        opacity: 0.8;
+    }
+
+    tr th {
+        color: black;
+    }
+
+    th,
+    td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+        background-color: #f2f2f2;
+        color: black;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .appointment-btn {
+        padding: 8px;
+        cursor: pointer;
+        background-color: rgb(30, 53, 230);
+        color: white;
+        border: none;
+        border-radius: 3px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        th,
+        td {
+            display: block;
+            width: 100%;
+        }
+
+        th,
+        td:nth-child(3) {
+            text-align: center;
+        }
+    }
+
+    @media only screen and (min-width: 601px) and (max-width: 800px) {
+        th:nth-child(2),
+        td:nth-child(2),
+        th:nth-child(3),
+        td:nth-child(3) {
+            display: none;
+        }
+
+        th,
+        td {
+            width: 50%;
+        }
+    }
+</style>
+
+<div class="hero-section doctor-bg">
+    <div class="table-container">
+        <table id="doctorsTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Cabin Number</th>
+                    <th>Action</th>
+                    <!-- <th>Status</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr>
+                    <td>{{ doctor.name }}</td>
+                    <td>{{ doctor.specialization }}</td>
+                    <td>{{ doctor.cabin_number }}</td>
+                    <td>
+                        <a href="{{ url_for('make_appointment', doctor_name=doctor.name) }}" class="appointment-btn">
+                            Make Appointment
+                        </a>
+                    </td>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

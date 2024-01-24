@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Doctor Registration Name
+{% endblock %}
+
+{% block content %}
+<div class="register-doctor">
+    <div class="form">
+        <form method="POST" action="{{ url_for('registerdoctor') }}">
+
+            <p class="heading">Doctor Registration</p>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="contact_number">Contact Number:</label>
+            <input type="text" id="contact_number" name="contact_number" required>
+
+            <label for="specialization">Specialization:</label>
+            <input type="text" id="specialization" name="specialization" required>
+
+            <label for="cabin_number">Cabin Number:</label>
+            <input type="text" id="cabin_number" name="cabin_number" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="fees">Consultation Fees:</label>
+            <input type="text" id="fees" name="fees" required>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Reset some default styles */
+    body,
+    h1,
+    h2,
+    h3,
+    p,
+    ul,
+    ol,
+    form,
+    button {
+        margin: 0;
+        padding: 0;
+    }
+
+    form {
+        width:50% ;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 10px;
+        border-color: black;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s;
+        opacity: 0.8;
+        background-color: white;
+    }
+
+    form:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .heading {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #007BFF;
+    }
+
+    label {
+        display: flex;
+        margin-bottom: 10px;
+        color: #212122;
+        font-weight: bold;
+    }
+
+    .form {
+        display: flex;
+        width: 75%;
+        justify-content: center;
+        /* margin-left: 25%; */
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        border: 1px solid black;
+        border-radius: 6px;
+        background-color: #fff;
+        transition: border-color 0.3s;
+    }
+
+    input:focus {
+        border-color: #007BFF;
+    }
+
+    button {
+        padding: 14px 24px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+        /* Make button full-width */
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

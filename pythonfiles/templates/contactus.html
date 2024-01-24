@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+Contact Us
+
+{% endblock %}
+
+
+{% block content %}
+<style>
+    /* Reset default margin and padding */
+    /* * { */
+    /* margin: 0;
+padding: 0;
+box-sizing: border-box;
+} */
+
+    /* Basic styles */
+    /* header {
+background-color: #333;
+color: #fff;
+padding: 10px 0;
+} */
+
+    .containerus {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        /* max-height: 400px; */
+    }
+
+    .containerus p {
+        color: black;
+    }
+
+    main {
+        display: flex;
+        justify-content: center;
+    }
+
+    .h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: black;
+    }
+
+    section {
+        background-color: #fff;
+        border-radius: 5px;
+        opacity: 0.7;
+        box-shadow: 0 0 10px #3468C0;
+        margin: 20px;
+        padding: 20px;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .contact-info p {
+        margin-bottom: 10px;
+        color: black;
+    }
+
+    .contact-form {
+        margin-top: 20px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+
+    .contact-form button {
+        padding: 10px 20px;
+        background-color: rgb(30, 53, 230);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+        .container {
+            padding: 5px;
+            /* Adjusted padding */
+            max-width: 100%;
+            /* Ensures container width fits smaller screens */
+        }
+
+        section {
+            margin: 5px 0;
+            /* Reduced section margin */
+        }
+
+        .contact-info p {
+            margin-bottom: 3px;
+            /* Decreased margin bottom for contact info */
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: calc(100% - 10px);
+            /* Adjusted width calculation */
+            padding: 6px;
+            /* Slightly reduced padding */
+            margin-bottom: 8px;
+            /* Smaller bottom margin */
+        }
+
+        .contact-form button {
+            padding: 6px 12px;
+            /* Reduced button padding */
+        }
+
+        .flash-message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    }
+</style>
+<div class="hero-section contact-bg">
+    <!-- <div class="container">
+        <h2>Welcome to Our Hospital Management System</h2>
+        <p>Efficiently managing healthcare services.</p>
+        <a href="#" class="btn">Get Started</a>
+    </div> -->
+
+    <main>
+        <section class="contact">
+            <div class="containerus">
+                <h1 class="h1">Contact Us</h1>
+                <p>For any inquiries or assistance, please feel free to contact us using the information below:</p>
+                <div class="contact-info">
+                    <p><strong>Email:</strong> parasbhosale1543@gmail.com</p>
+                    <p><strong>Phone:</strong> +91-8237441543</p>
+                    <p><strong>Address:</strong> Care Hospital Wellsly road ShivajiNagar Pune </p>
+                </div>
+                <div class="contact-form">
+                    <h2 class="h1">Send Us a Message</h2>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <div class="flash-message alert alert-success">
+                        {{ messages[0] }}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                    <form id="contactForm" action="/contact" method="post">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <textarea name="message" placeholder="Your Message" required></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

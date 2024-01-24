@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Staff Login Page
+{% endblock %}
+
+{% block content %}
+<style>
+    .h1 {
+        /* background-color: #333; */
+        color: Black;
+        text-align: center;
+        padding: 20px;
+    }
+
+    form {
+        width: 50%;
+        height: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        border-color: solid black;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        opacity: 0.8;
+    }
+
+    .form {
+        display: flex;
+        width: 75%;
+        justify-content: center;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: black;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+        border-color: black;
+    }
+
+    button {
+        padding: 10px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .flash-messages {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        height: 50px;
+        /* background-color: #4CAF50; */
+        color: #7E1717;
+        font-size: 18px;
+    }
+
+    /* .flash-message-container {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+    } */
+
+    .flash-message {
+        padding: 10px;
+        border-radius: 5px;
+        animation: slideInAndOut 4s ease-in-out;
+    }
+
+    .flash-messages.registration {
+        /* Add styles for flash messages when appointment is scheduled */
+        background-color: #90EE90;
+        border-color: #c3e6cb;
+        animation: slideIn 1s ease-out;
+    }
+
+
+    .flash-messages.registration .message {
+        /* Add styles for individual messages when appointment is scheduled */
+        color: #155724;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(-100%);
+        }
+
+        to {
+            transform: translateX(0);
+        }
+    }
+
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+            visibility: hidden;
+            /* Hide the element after fading out */
+        }
+    }
+
+    .flash-message.show {
+        opacity: 1;
+        animation: none;
+        /* Disable the slideIn animation when showing the message */
+    }
+</style>
+
+<div id="flash-messages-container" class="flash-messages ">
+    {% with messages = get_flashed_messages() %}
+    {% if registration %}
+    <!-- {% for message, message_type in messages %} -->
+    <div class="flash-message alert alert-{{ message_type }}">
+        {{ message }}
+    </div>
+    <!-- {% endfor %} -->
+    {% endif %}
+    {% endwith %}
+
+</div>
+
+<div class="login-staff">
+
+    <form method="POST" action="/login_staff">
+        <h1 class="h1">Staff Login</h1>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".flash-messages").fadeOut("slow");
+        }, 2500); // 1500 milliseconds (1.5 seconds)
+    });
+</script>
+
+{% endblock %}
